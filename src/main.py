@@ -9,12 +9,16 @@ from bot.start import start_command
 
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def parse_urls() -> list[str]:
     urls = []
     with open('/app/urls_to_scrap.txt') as f:
         while (line := f.readline()) != '':
-            if (line := line.strip())[0] != '#':
+            line = line.strip()
+            logger.info(f'got line: {line}')
+            if (line or '#')[0] != '#':
                 urls.append(line)
     return urls
 

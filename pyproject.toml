@@ -6,9 +6,9 @@ authors = ["arcimiendar <artimendor@yandex.ru>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-selenium = "^4.1.2"
 SQLAlchemy = "^1.4.32"
 python-telegram-bot = "^13.13"
+selenium = "^4.3.0"
 
 [tool.poetry.dev-dependencies]
 sqlalchemy2-stubs = "^0.0.2-alpha.24"

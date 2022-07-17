@@ -2,9 +2,9 @@ import logging
 
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver import Remote
 from selenium.webdriver.common.by import By
 from sqlalchemy.orm import Session as DBSession
-from selenium.webdriver import Chrome
 
 from db.models import Appartment
 
@@ -33,7 +33,12 @@ def get_appartments_from_main_page(session: DBSession, url: str):
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
-    driver = Chrome(chrome_options=options)
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = Remote(
+        command_executor='http://localhost:4444/wd/hub',
+        options=options
+    )
     appartments = []
     with driver:
         driver.get(url)

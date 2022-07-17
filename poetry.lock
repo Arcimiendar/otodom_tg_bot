@@ -384,7 +384,7 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "9518b680d3476e00d78c3af3b4e834c3c09b6a15c462afa18f0abf1a5f88ea3d"
+content-hash = "25e2652d203b862cf7c21790ddf6b7e0d82ad48380316075aa00fc855729a681"
 
 [metadata.files]
 apscheduler = []

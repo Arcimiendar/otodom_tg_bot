@@ -5,3 +5,13 @@ services:
     image: selenium/standalone-chrome:4.3.0-20220706
     ports:
       - "4444:4444"
+  tg_bot:
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      SELENIUM_URL: "http://chrome:4444/wd/hub"
+    command: python main.py
+    depends_on:
+      - chrome

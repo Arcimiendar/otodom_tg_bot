@@ -1,4 +1,5 @@
 import logging
+import os
 
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -36,7 +37,7 @@ def get_appartments_from_main_page(session: DBSession, url: str):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     driver = Remote(
-        command_executor='http://localhost:4444/wd/hub',
+        command_executor=os.environ.get('SELENIUM_URL', 'http://localhost:4444/wd/hub'),
         options=options
     )
     appartments = []

@@ -3,13 +3,20 @@ import logging
 import os
 
 from telegram.ext import Updater, Dispatcher, ExtBot
-from threading import Thread
 
-from bot.appartment import scrapper
+from bot.appartment import ScrapperManager
 from bot.start import start_command
 
 
 logging.basicConfig(level=logging.INFO)
+
+def parse_urls() -> list[str]:
+    urls = []
+    with open('/app/urls_to_scrap.txt') as f:
+        while (line := f.readline()) != '':
+            if (line := line.strip())[0] != '#':
+                urls.append(line)
+    return urls
 
 
 def main():
@@ -19,23 +26,13 @@ def main():
 
     dp.add_handler(start_command)
     bot: ExtBot = dp.bot
-    thread1 = Thread(target=scrapper, args=(
-        bot,
-        'https://www.otodom.pl/pl/oferty/wynajem/mieszkanie/'
-        'wroclaw?distanceRadius=0&page=1&limit=36&market=ALL&ownerTypeSingleSelect=ALL&'
-        'roomsNumber=%5BONE%2CTWO%2CTHREE%5D&locations=%5Bcities_6-39%5D&'
-        'sviewType=listing&by=LATEST&direction=DESC'
-    ))
-    thread2 = Thread(target=scrapper, args=(
-        bot,
-        'https://www.otodom.pl/pl/oferty/wynajem/mieszkanie/poznan?roomsNumber=%5BONE%5D&by=LATEST&direction=DESC'
-    ))
-    thread1.start()
-    thread2.start()
+    urls = parse_urls()
+
+    manager = ScrapperManager(urls, bot)
+    manager.start()
 
     updater.start_polling()
-    thread1.join()
-    thread2.join()
+    manager.join()
 
 
 if __name__ == '__main__':

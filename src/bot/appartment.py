@@ -1,5 +1,6 @@
 import time
 import logging
+import threading
 
 from telegram.ext import ExtBot
 
@@ -27,3 +28,20 @@ def scrapper(bot: ExtBot, url: str):
             logger.error('huston: %s' % e, exc_info=True)
 
         time.sleep(60)
+
+
+class ScrapperManager:
+    def __init__(self, urls_to_scrap: list[str], bot: ExtBot):
+        self.threads: list[threading.Thread] = []
+        for url in urls_to_scrap:
+            self.threads.append(threading.Thread(
+                target=scrapper, args=(bot, url)
+            ))
+
+    def start(self):
+        for thread in self.threads:
+            thread.start()
+
+    def join(self):
+        for thread in self.threads:
+            thread.join()

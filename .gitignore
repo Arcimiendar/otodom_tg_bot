@@ -1,3 +1,4 @@
 src/scrapper.db
 .idea
 .env
+urls_to_scrap.txt

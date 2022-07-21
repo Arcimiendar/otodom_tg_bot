@@ -11,4 +11,3 @@ COPY poetry.lock pyproject.toml /app/
 RUN poetry config virtualenvs.create false && poetry install
 
 COPY ./src /app/
-COPY urls_to_scrap.txt /app/

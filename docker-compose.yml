@@ -15,3 +15,5 @@ services:
     command: python main.py
     depends_on:
       - chrome
+    volumes:
+      - ./:/app/

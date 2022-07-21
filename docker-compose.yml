@@ -16,4 +16,4 @@ services:
     depends_on:
       - chrome
     volumes:
-      - ./:/app/
+      - ./src:/app/
